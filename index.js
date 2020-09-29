@@ -1,3 +1,9 @@
+//Requires redux
+const redux =  require('redux')
+
+//create store
+const createStore = redux.createStore
+
 const BUY_CAKE = 'BUY_CAKE'
 
 //Action creator is a function that returns an action
@@ -31,3 +37,20 @@ const reducer = (state = initialState, action) => {
         default: return state
     }
 }
+
+//Accepts the parameter which is the reducer function
+//Now the redux store is holding the application's state.
+const store = createStore(reducer);
+
+//Here the initial state value is printed.
+console.log('initial state',store.getState());
+
+const unsubscribe = store.subscribe(() => console.log('updated state',store.getState()))
+
+//dispatch function calls the action buyCake which reduces the state value by one this section is called three times.
+//So initially the cakes were 10 and now it would be 7 at last.
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+
+unsubscribe()
