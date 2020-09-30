@@ -1,9 +1,16 @@
 //Requires redux
 const redux =  require('redux')
+//Require redux logger
+const reduxLogger = require('redux-logger')
+
+const logger = reduxLogger.createLogger()
 
 //create store
 const createStore = redux.createStore
 const combineReducers = redux.combineReducers
+
+//Apply middleware
+const applyMiddleware = redux.applyMiddleware
 
 const BUY_CAKE = 'BUY_CAKE'
 const BUY_ICECREAM = 'BUY_ICECREAM'
@@ -105,7 +112,8 @@ const rootReducer = combineReducers({
 //Accepts the parameter which is the reducer function
 //Now the redux store is holding the application's state.
 //Here, the rootReducer is holding many reducers inside.
-const store = createStore(rootReducer);
+//applyMiddleware is the second parameter which has the logger inside which logs the changes to the console
+const store = createStore(rootReducer,applyMiddleware(logger));
 
 //Accepts the parameter which is the reducer function
 //Now the redux store is holding the application's state.
@@ -115,7 +123,7 @@ const store = createStore(rootReducer);
 //Here the initial state value is printed.
 console.log('initial state',store.getState());
 
-const unsubscribe = store.subscribe(() => console.log('updated state',store.getState()))
+// const unsubscribe = store.subscribe(() => console.log('updated state',store.getState()))
 
 //dispatch function calls the action buyCake which reduces the state value by one this section is called three times.
 //So initially the cakes were 10 and now it would be 7 at last.
@@ -126,4 +134,4 @@ store.dispatch(buyCake())
 store.dispatch(buyIceCream())
 store.dispatch(buyIceCream())
 
-unsubscribe()
+// unsubscribe()
